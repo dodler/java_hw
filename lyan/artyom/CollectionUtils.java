@@ -55,24 +55,24 @@ public class CollectionUtils<T> {
         return true;
     }
 
-    public static <T extends Comparable<T>> List<? super T> range(
-            List<T> list,
+    public static <T extends Comparable<T>> List<T> range(
+            List<? extends T> list,
             T min,
             T max) {
-        return list.stream().
-                filter(e -> e.compareTo(min) < 0)
-                .filter(e -> e.compareTo(max) > 0)
+        return list.stream()
+                .filter(e -> e.compareTo(min) >= 0)
+                .filter(e -> e.compareTo(max) <= 0)
                 .collect(Collectors.toList());
     }
 
-    public static <T extends Comparable<T>> List<? super T> range(
-            List<T> list,
+    public static <T extends Comparable<T>> List<T> range(
+            List<? extends T> list,
             T min,
             T max,
             Comparator comparator) {
         return list.stream().
-                filter(e -> comparator.compare(e, min) < 0)
-                .filter(e -> comparator.compare(e, max) > 0)
+                filter(e -> comparator.compare(e, min) >= 0)
+                .filter(e -> comparator.compare(e, max) <= 0)
                 .collect(Collectors.toList());
     }
 
